@@ -1,0 +1,39 @@
+<header>
+  <mat-toolbar>
+      <button mat-icon-button aria-label="Menu" [matMenuTriggerFor]="menu">
+          <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/play']">Jouer</button>
+          <button mat-menu-item [routerLink]="['/scores']">Scores</button>
+      </mat-menu>
+      <span [routerLink]="['/index']">Flappy birb 🦉</span>
+      <div class="spacer"></div>
+      <button mat-icon-button aria-label="Connexion et inscription" [routerLink]="['/login']">
+          <mat-icon>login</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Déconnexion" (click)="logout()">
+          <mat-icon>logout</mat-icon>
+      </button>
+  </mat-toolbar>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  <mat-toolbar>
+
+  </mat-toolbar>
+</footer>
+
+<div id="darkScreen2" style="visibility:hidden;">
+<mat-card id="logoutBox">
+  <mat-card-content>
+    Vous êtes déconnecté(e).
+    <br>
+    <button mat-raised-button (click)="logout()"><mat-icon>thumb_up</mat-icon></button>
+  </mat-card-content>
+</mat-card>
+</div>

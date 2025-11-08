@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    background-color:#eeeeee;
+  }
+  
+  .shape{
+    z-index:1;
+    position:absolute;
+  }
+  
+#darkScreen, #darkScreen2{
+  top:0px;
+  position:fixed;
+  height:100%;
+  width:100%;
+  background-color:rgba(0,0,0,0.5);
+  z-index:3;
+}

@@ -1,0 +1,74 @@
+<div class="login">
+
+    <!-- Connexion -->
+    <mat-card>
+  
+      <mat-card-header><mat-icon>login</mat-icon>Connexion</mat-card-header>
+  
+      <mat-card-content>
+  
+        <mat-form-field>
+          <mat-label>Nom d'utilisateur</mat-label>
+          <input matInput required name="loginUsername" [(ngModel)]="loginUsername">
+        </mat-form-field>
+  
+        <br>
+  
+        <mat-form-field>
+          <mat-label>Mot de passe</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" required name="loginPassword" [(ngModel)]="loginPassword">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+  
+      </mat-card-content>
+  
+      <mat-card-footer>
+        <button mat-raised-button (click)="login()">Se connecter</button>
+      </mat-card-footer>
+      
+    </mat-card>
+  
+    <!-- Inscription -->
+    <mat-card>
+  
+      <mat-card-header><mat-icon>person</mat-icon>Inscription</mat-card-header>
+  
+      <mat-card-content>
+      
+        <mat-form-field>
+          <mat-label>Nom d'utilisateur</mat-label>
+          <input matInput required name="registerUsername" [(ngModel)]="registerUsername">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Adresse courriel</mat-label>
+          <input matInput placeholder="nom@exemple.com" required name="registerEmail" [(ngModel)]="registerEmail">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Mot de passe</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" name="registerPassword" [(ngModel)]="registerPassword">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" required>
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Confirmer le mot de passe</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" name="registerPasswordConfirm" [(ngModel)]="registerPasswordConfirm">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" required>
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+  
+      </mat-card-content>
+  
+      <mat-card-footer>
+        <button mat-raised-button (click)="register()">S'inscrire</button>
+      </mat-card-footer>
+  
+    </mat-card>
+  
+  </div>

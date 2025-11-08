@@ -1,0 +1,25 @@
+<div class="playZone">
+    <div id="game">
+      <div id=score>0</div>
+      <img id="birbgreen" src="/assets/images/duo_green_0.png" alt="Duo" style="visibility:hidden; top:500px; left:218px;">
+      <img id="birbblue" src="/assets/images/duo_blue_0.png" alt="Duo" style="visibility:hidden; top:500px; left:218px;">
+      <div id="startMsg">Appuyer sur W et E pour commencer.</div>
+      <hr id="limit">
+    </div>
+  </div>
+  
+  <div id="darkScreen" style="visibility:hidden;">
+    <mat-card id="scorePanel">
+      <mat-card-content>
+        Partie terminée ! 
+        <div id="lastScore">Score : 0</div>
+        <br>
+        <img id="reaction" src="/assets/images/sad.png" alt="Duo">
+        <div>
+          <button color="primary" mat-raised-button (click)="replay()">Fermer</button>
+          <button *ngIf="!scoreSent" color="primary" mat-raised-button (click)="sendScore()">Envoyer le score</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  

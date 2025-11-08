@@ -1,0 +1,55 @@
+<div id="scores">
+
+    <!-- Vos scores (Caché si pas connecté) -->
+    <mat-card>
+
+        <mat-card-header><mat-icon>sports_esports</mat-icon>Vos scores</mat-card-header>
+    
+        <mat-card-content>
+    
+            <table>
+                <tr>
+                    <th>Score</th>
+                    <th>Temps (s.)</th>
+                    <th>Date</th>
+                    <th>Visibilité</th>
+                </tr>
+                <tr *ngFor="let s of myScores">
+                    <td>{{s.scoreValue}}</td>
+                    <td>{{s.timeInSeconds | round00}}</td>
+                    <td>{{s.date | date:'MMM d, yyyy'}}</td>
+                    <td (click)="changeScoreVisibility(s)"><mat-icon>{{s.isPublic ? 'visibility' : 'visibility_off'}}</mat-icon></td>
+                </tr>
+            </table>
+    
+        </mat-card-content>
+        
+    </mat-card>
+
+    <!-- Tous les scores publics -->
+    <mat-card>
+
+        <mat-card-header><mat-icon>people</mat-icon>Meilleurs scores</mat-card-header>
+    
+        <mat-card-content>
+    
+            <table>
+                <tr>
+                    <th>Pseudo</th>
+                    <th>Score</th>
+                    <th>Temps (s.)</th>
+                    <th>Date</th>
+                </tr>
+                <tr *ngFor="let s of publicScores">
+                    <td>{{s.pseudo}}</td>
+                    <td>{{s.scoreValue}}</td>
+                    <td>{{s.timeInSeconds | round00}}</td>
+                    <td>{{s.date | date:'MMM d, yyyy'}}</td>
+                </tr>
+            </table>
+    
+        </mat-card-content>
+        
+    </mat-card>
+
+</div>

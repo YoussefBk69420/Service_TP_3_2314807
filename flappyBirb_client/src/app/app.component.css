@@ -1,0 +1,47 @@
+
+header mat-toolbar span{
+    font-size:1.3em;
+    font-weight:500;
+}
+
+.spacer {
+    flex: 1;
+}
+
+header{
+    position:fixed;
+    top:0px;
+    width:100%;
+}
+
+mat-toolbar{
+    width:100%;
+    background:#d7e3ff;
+    color:#005cbb;
+}
+
+main{
+    margin-top:64px;
+}
+
+#logoutBox{
+    position:absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity:0;
+    transition:0.25s;
+}
+
+#logoutBox button{
+    margin-top:10px;
+}
+
+#logoutBox button mat-icon{
+    margin:auto;
+}
+
+mat-icon{
+    color:#005cbb;
+}

@@ -1,0 +1,40 @@
+#scores{
+    padding:20px 0px;
+    display:flex;
+    margin:auto;
+    justify-content: center;
+    gap:20px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    height:calc(100vh - 168px);
+}
+
+mat-card{
+    width:500px;
+}
+
+mat-card:first-child{
+    width:400px;
+}
+
+mat-card-header{
+    margin-bottom:20px;
+    justify-content: center;
+    font-size:1.3em;
+}
+
+mat-card-header mat-icon{
+    margin-right:5px;
+}
+
+table{
+    width:100%;
+}
+
+td{
+    text-align: center;
+}
+
+td>mat-icon{
+    cursor:pointer;
+}

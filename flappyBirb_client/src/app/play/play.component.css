@@ -1,0 +1,73 @@
+.playZone{
+    display:flex;
+    justify-content: center;
+    padding:20px 0px;
+    align-items: center;
+    height:calc(100vh - 168px);
+}
+
+#score{
+    color:white;
+    font-weight:bold;
+    position:absolute;
+    top: 20px;
+    left: 50%;
+    z-index:3;
+    font-size:3em;
+    transform: translate(-50%, 0%);
+}
+
+#game{
+    width:500px;
+    height:700px;
+    position:relative;
+    background:linear-gradient(to bottom, #661366, #0d1542) fixed;
+    overflow:hidden;
+}
+
+#birbblue, #birbgreen{
+    z-index:2;
+    position:absolute;
+}
+
+#limit{
+    color:rgba(255,255,255,0.7);
+    position:absolute;
+    width:500px;
+    top:345px;
+    border-style: dashed;
+    border-width:5px;
+    left:0px;
+}
+
+#scorePanel{
+    z-index:4;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#scorePanel button{
+    margin-top:10px;
+}
+
+#scorePanel button:not(:first-child){
+    margin-left:10px;
+}
+
+#lastScore{
+    margin:10px 0px;
+    font-size:2em;
+}
+
+#startMsg{
+    z-index:4;
+    position:absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color:white;
+}

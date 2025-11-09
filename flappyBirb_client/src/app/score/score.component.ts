@@ -24,7 +24,7 @@ export class ScoreComponent {
     this.publicScores = await this.scoresService.getPublicScores();
     this.myScores = await this.scoresService.getPrivateScores();
 
-
+    
   }
 
   async changeScoreVisibility(score : Score){

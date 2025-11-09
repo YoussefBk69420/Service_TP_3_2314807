@@ -13,7 +13,7 @@ export class ScoresService {
 
   async getPublicScores(){
 
-    let x = await lastValueFrom(this.http.get<any>(domain + "api/Scores/PublicScores"));
+    let x = await lastValueFrom(this.http.get<any>(domain + "api/Scores/GetPublicScores"));
     console.log(x);
 
     return x;

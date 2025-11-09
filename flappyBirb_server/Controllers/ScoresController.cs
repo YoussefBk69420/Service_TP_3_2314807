@@ -15,7 +15,7 @@ using flappyBirb_server.Models.DTO;
 
 namespace flappyBirb_server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ScoresController : ControllerBase
     {
@@ -117,12 +117,12 @@ namespace flappyBirb_server.Controllers
                 ScoreValue = scoreDTO.ScoreValue,          
             };
 
-            Score? scoreChanged = await _scoresService.PostScore(score);
+            Score? postScore = await _scoresService.PostScore(score);
 
-            if (scoreChanged == null) return StatusCode(StatusCodes.Status500InternalServerError,
+            if (postScore == null) return StatusCode(StatusCodes.Status500InternalServerError,
                 new { Message = "Veuillez réessayer plus tard." });
 
-            return Ok(scoreChanged);
+            return Ok(postScore);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using flappyBirb_server.Data;
-using flappyBirb_server.Models
+using flappyBirb_server.Models;
 
 using Microsoft.EntityFrameworkCore;
 

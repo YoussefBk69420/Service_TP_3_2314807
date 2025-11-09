@@ -44,7 +44,7 @@ namespace flappyBirb_server
                     ValidAudience = "http://localhost:4200", // Audience : Client
                     ValidIssuer = "https://localhost:7249", // Issuer : Serveur -> HTTPS V�RIFIEZ le PORT de votre serveur dans launchsettings.json !
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                        .GetBytes("LooOOongue Phrase SiNoN �a ne Marchera PaAaAAAaAas !")) // Cl� pour d�chiffrer les tokens
+                        .GetBytes("LooOOongue Phrase SiNoN Ça ne Marchera PaAaAAAaAas !")) // Cl� pour d�chiffrer les tokens
                 };
             });
 

@@ -29,7 +29,10 @@ export class ScoreComponent {
 
   async changeScoreVisibility(score : Score){
 
+
     await this.scoresService.changeScoreVisibility(score.id);
+
+    await this.ngOnInit();
   }
 
 }

@@ -18,7 +18,7 @@
                     <td>{{s.scoreValue}}</td>
                     <td>{{s.timeInSeconds | round00}}</td>
                     <td>{{s.date | date:'MMM d, yyyy'}}</td>
-                    <td (click)="changeScoreVisibility(s)"><mat-icon>{{s.isPublic ? 'visibility' : 'visibility_off'}}</mat-icon></td>
+                    <td (click)="s.isPublic = !s.isPublic; changeScoreVisibility(s)"><mat-icon>{{s.isPublic ? 'visibility' : 'visibility_off'}}</mat-icon></td>
                 </tr>
             </table>
     

@@ -33,7 +33,7 @@
   <mat-card-content>
     Vous êtes déconnecté(e).
     <br>
-    <button mat-raised-button (click)="logout()"><mat-icon>thumb_up</mat-icon></button>
+    <button mat-raised-button (click)="logout()" [routerLink]="['/login']"><mat-icon>thumb_up</mat-icon></button>
   </mat-card-content>
 </mat-card>
 </div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MaterialModule } from '../material.module';
 import { FormsModule } from '@angular/forms';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -22,20 +23,22 @@ export class LoginComponent {
   loginUsername : string = "";
   loginPassword : string = "";
 
-  constructor(public route : Router) { }
+  constructor(public accountService : AccountService, public route : Router) { }
 
   ngOnInit() {
   }
 
-  login(){
+  async login(){
+    let x = await this.accountService.login(this.loginUsername, this.loginPassword)
 
-
-    // Redirection si la connexion a réussi :
-    this.route.navigate(["/play"]);
+    if(x) {
+      // Redirection si la connexion a réussi :
+      this.route.navigate(["/play"]);
+    } 
   }
 
-  register(){
-
+  async register(){
+    await this.accountService.register(this.registerUsername, this.registerEmail, this.registerPassword, this.registerPasswordConfirm);
   }
   
 }

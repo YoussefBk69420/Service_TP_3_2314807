@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using flappyBirb_server.Data;
 using flappyBirb_server.Models;
+using Microsoft.AspNetCore.Authorization;
+using flappyBirb_server.Services;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using flappyBirb_server.Models.DTO;
 
 namespace flappyBirb_server.Controllers
 {
@@ -14,74 +19,110 @@ namespace flappyBirb_server.Controllers
     [ApiController]
     public class ScoresController : ControllerBase
     {
-        private readonly flappyBirb_serverContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly ScoresService _scoresService;
 
-        public ScoresController(flappyBirb_serverContext context)
+        public ScoresController(UserManager<User> userManager, ScoresService scoresService)
         {
-            _context = context;
+            _userManager = userManager;
+            _scoresService = scoresService;
         }
 
         // GET: api/Scores/GetPublicScores
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Score>>> GetPublicScores()
-        //{
-        //    return await _context.Score.ToListAsync();
-        //}
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<ActionResult<IEnumerable<Score>>> GetPublicScores()
+        {
+            var publicScores = await _scoresService.GetPublicScores();
 
-        // GET: api/Scores/GetMyScore
-        //[HttpGet]
-        //public async Task<ActionResult<Score>> GetMyScore()
-        //{
-        //    var score = await _context.Score.FindAsync(id);
+            
+            if (publicScores == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { Message = "Veuillez réessayer plus tard." });
+            }
 
-        //    if (score == null)
-        //    {
-        //        return NotFound();
-        //    }
 
-        //    return score;
-        //}
+            return publicScores;
+        }
+
+        // GET: api/Scores/GetMyScores
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<List<Score>>> GetMyScores()
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            
+            var privateScores = await _scoresService.GetMyScores(user);
+
+            if (privateScores == null)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    new { Message = "Veuillez réessayer plus tard." });
+            }
+
+
+            return privateScores;
+        }
 
         // PUT: api/Scores/ChangeScoreVisibility/{id}
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> ChangeScoreVisibility(int id, Score score)
-        //{
-        //    if (id != score.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<ActionResult> ChangeScoreVisibility(int id)
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        //    _context.Entry(score).State = EntityState.Modified;
+            if (user == null) return Unauthorized();
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ScoreExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            Score? previousScore = await _scoresService.GetScore(id);
 
-        //    return NoContent();
-        //}
+            if (previousScore == null) return NotFound();
 
-        // POST: api/Scores/PostScore
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<Score>> PostScore(Score score)
-        //{
-        //    _context.Score.Add(score);
-        //    await _context.SaveChangesAsync();
+            // Utilisateur pas propriétaire du score ?
+            if (previousScore.User.Id != user.Id) return Unauthorized();
 
-        //    return CreatedAtAction("GetScore", new { id = score.Id }, score);
-        //} 
+            Score? newScore = await _scoresService.ChangeScoreVisibility(id);
+
+            if (newScore == null) return StatusCode(StatusCodes.Status500InternalServerError,
+                new { Message = "Veuillez réessayer plus tard." }); // Problème avec la BD ?
+
+            return Ok(new { Message = "Score modifié", Score = newScore });
+        }
+
+        //POST: api/Scores/PostScore
+        //To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<Score>> PostScore(ScoreDTO scoreDTO)
+        {
+            User? user = await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            if (user == null) return Unauthorized();
+
+
+            var score = new Score
+            {
+                User = user,
+                Date = DateTime.Now.ToString(),
+                Pseudo = user.UserName!,
+                TimeInSeconds = scoreDTO.TimeInSeconds,
+                IsPublic = false,
+                ScoreValue = scoreDTO.ScoreValue,          
+            };
+
+            Score? scoreChanged = await _scoresService.PostScore(score);
+
+            if (scoreChanged == null) return StatusCode(StatusCodes.Status500InternalServerError,
+                new { Message = "Veuillez réessayer plus tard." });
+
+            return Ok(scoreChanged);
+        }
     }
 }

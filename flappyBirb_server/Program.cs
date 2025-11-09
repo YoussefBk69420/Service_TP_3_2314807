@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using flappyBirb_server.Data;
+using Microsoft.Extensions.Options;
+using flappyBirb_server.Services;
 
 namespace flappyBirb_server
 {
@@ -15,9 +17,12 @@ namespace flappyBirb_server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
+
             builder.Services.AddDbContext<flappyBirb_serverContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("flappyBirb_serverContext") ?? throw new InvalidOperationException("Connection string 'flappyBirb_serverContext' not found.")));
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("flappyBirb_serverContext") ?? throw new InvalidOperationException("Connection string 'flappyBirb_serverContext' not found."));
+                options.UseLazyLoadingProxies(); // On ajoute ceci !
+            });
 
             builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<flappyBirb_serverContext>(); // Et ceci
 
@@ -63,6 +68,7 @@ namespace flappyBirb_server
             });
 
             // Add services to the container.
+            builder.Services.AddScoped<ScoresService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
